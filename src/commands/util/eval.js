@@ -13,14 +13,14 @@ module.exports = class EvalCommand extends Command {
 			name: 'eval',
 			group: 'util',
 			memberName: 'eval',
-			description: 'Executes JavaScript code.',
-			details: 'Only the bot owner(s) may use this command.',
+			description: '자바스크립트 코드를 실행합니다.',
+			details: '디스코드 봇 소유자만 이 명령어를 사용할 수 있습니다.',
 			ownerOnly: true,
 
 			args: [
 				{
 					key: 'script',
-					prompt: 'What code would you like to evaluate?',
+					prompt: '어떤 코드를 실행할까요?',
 					type: 'string'
 				}
 			]
@@ -38,7 +38,7 @@ module.exports = class EvalCommand extends Command {
 		const lastResult = this.lastResult;
 		const doReply = val => {
 			if(val instanceof Error) {
-				msg.reply(`Callback error: \`${val}\``);
+				msg.reply(`콜백 오류: \`${val}\``);
 			} else {
 				const result = this.makeResultMessages(val, process.hrtime(this.hrStart));
 				if(Array.isArray(result)) {
@@ -57,7 +57,7 @@ module.exports = class EvalCommand extends Command {
 			this.lastResult = eval(args.script);
 			hrDiff = process.hrtime(hrStart);
 		} catch(err) {
-			return msg.reply(`Error while evaluating: \`${err}\``);
+			return msg.reply(`실행중 오류가 발생했습니다.: \`${err}\``);
 		}
 
 		// Prepare for callback time and respond

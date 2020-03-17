@@ -4,23 +4,23 @@ const Command = require('../base');
 module.exports = class UnloadCommandCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'unload',
-			aliases: ['unload-command'],
+			name: '언로드',
+			aliases: ['unload-command', 'unload'],
 			group: 'commands',
 			memberName: 'unload',
-			description: 'Unloads a command.',
+			description: '명령어를 언로드합니다.',
 			details: oneLine`
-				The argument must be the name/ID (partial or whole) of a command.
-				Only the bot owner(s) may use this command.
+				인자값은 \`group:memberName\` 형태로 완전한 명령어 이름이 주어져야 합니다.
+				디스코드 봇 소유자만 이 명령어를 사용할 수 있습니다.
 			`,
-			examples: ['unload some-command'],
+			examples: ['언로드 some-command'],
 			ownerOnly: true,
 			guarded: true,
 
 			args: [
 				{
 					key: 'command',
-					prompt: 'Which command would you like to unload?',
+					prompt: '어떤 명령어를 언로드할까요?',
 					type: 'command'
 				}
 			]

@@ -4,23 +4,23 @@ const Command = require('../base');
 module.exports = class PrefixCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'prefix',
+			name: '접두어',
+			aliases: ['prefix'],
 			group: 'util',
 			memberName: 'prefix',
-			description: 'Shows or sets the command prefix.',
-			format: '[prefix/"default"/"none"]',
+			description: '접두어를 보여주거나, 접두어를 설정합니다.',
+			format: '[prefix/"기본"/"없음"]',
 			details: oneLine`
-				If no prefix is provided, the current prefix will be shown.
-				If the prefix is "default", the prefix will be reset to the bot's default prefix.
-				If the prefix is "none", the prefix will be removed entirely, only allowing mentions to run commands.
-				Only administrators may change the prefix.
+				접두어를 제공되지 않았을 경우 현재 접두어를 표시합니다.
+				만약 접두어를 "기본" 으로 했을 경우 접두어는 봇의 기본 접두어로 변경됩니다.
+				만약 접두어를 "없음" 으로 했을 경우 접두어가 삭제됩니다. 언급을 통해서만 명령어를 실행할 수 있습니다. 
 			`,
-			examples: ['prefix', 'prefix -', 'prefix omg!', 'prefix default', 'prefix none'],
+			examples: ['접두어', '접두어 -', '접두어 야!', '접두어 기본', '접두어 없음'],
 
 			args: [
 				{
 					key: 'prefix',
-					prompt: 'What would you like to set the bot\'s prefix to?',
+					prompt: '봇의 접두어를 어떻게 설정할까요?',
 					type: 'string',
 					max: 15,
 					default: ''
@@ -49,19 +49,19 @@ module.exports = class PrefixCommand extends Command {
 		}
 
 		// Save the prefix
-		const lowercase = args.prefix.toLowerCase();
-		const prefix = lowercase === 'none' ? '' : args.prefix;
+		const servedPrefix = args.prefix;
+		const prefix = servedPrefix == '없음' ? '' : args.prefix;
 		let response;
-		if(lowercase === 'default') {
+		if(servedPrefix == '기본') {
 			if(msg.guild) msg.guild.commandPrefix = null; else this.client.commandPrefix = null;
-			const current = this.client.commandPrefix ? `\`\`${this.client.commandPrefix}\`\`` : 'no prefix';
-			response = `Reset the command prefix to the default (currently ${current}).`;
+			const current = this.client.commandPrefix ? `\`\`${this.client.commandPrefix}\`\`` : '접두어 없는 상태';
+			response = `기본 접두어로 변경했습니다. (${current} 였음)`;
 		} else {
 			if(msg.guild) msg.guild.commandPrefix = prefix; else this.client.commandPrefix = prefix;
-			response = prefix ? `Set the command prefix to \`\`${args.prefix}\`\`.` : 'Removed the command prefix entirely.';
+			response = prefix ? `접두어를 \`\`${args.prefix}\`\`로 변경했습니다.` : '접두어를 삭제했습니다.';
 		}
 
-		await msg.reply(`${response} To run commands, use ${msg.anyUsage('command')}.`);
+		await msg.reply(`${response} 명령어를 실행하려면 ${msg.anyUsage('command')} 를 사용하세요.`);
 		return null;
 	}
 };

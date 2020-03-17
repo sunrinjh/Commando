@@ -4,17 +4,17 @@ const Command = require('../base');
 module.exports = class ReloadCommandCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'reload',
-			aliases: ['reload-command'],
+			name: '리로드',
+			aliases: ['reload-command', 'reload'],
 			group: 'commands',
 			memberName: 'reload',
-			description: 'Reloads a command or command group.',
+			description: '명령어, 혹은 명령어 그룹을 리로드합니다.',
 			details: oneLine`
-				The argument must be the name/ID (partial or whole) of a command or command group.
-				Providing a command group will reload all of the commands in that group.
-				Only the bot owner(s) may use this command.
+				인자값은 명령어 혹은 명령어 그룹의 이름/ID 여야 합니다.
+				명령어 그룹을 인자값으로 제공했을 경우 그 그룹에 있는 모든 명령어를 리로드합니다.
+				디스코드 봇 소유자만 이 명령어를 사용할 수 있습니다.
 			`,
-			examples: ['reload some-command'],
+			examples: ['언로드 some-command'],
 			ownerOnly: true,
 			guarded: true,
 
@@ -22,7 +22,7 @@ module.exports = class ReloadCommandCommand extends Command {
 				{
 					key: 'cmdOrGrp',
 					label: 'command/group',
-					prompt: 'Which command or group would you like to reload?',
+					prompt: '어떤 명령어를 로드할까요?',
 					type: 'group|command'
 				}
 			]

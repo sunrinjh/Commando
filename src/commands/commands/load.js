@@ -5,29 +5,29 @@ const Command = require('../base');
 module.exports = class LoadCommandCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'load',
-			aliases: ['load-command'],
+			name: '로드',
+			aliases: ['load-command', 'load'],
 			group: 'commands',
 			memberName: 'load',
-			description: 'Loads a new command.',
+			description: '새 명령어를 로드합니다.',
 			details: oneLine`
-				The argument must be full name of the command in the format of \`group:memberName\`.
-				Only the bot owner(s) may use this command.
+				인자값은 \`group:memberName\` 형태로 완전한 명령어 이름이 주어져야 합니다.
+				디스코드 봇 소유자만 이 명령어를 사용할 수 있습니다.
 			`,
-			examples: ['load some-command'],
+			examples: ['로드 some-command'],
 			ownerOnly: true,
 			guarded: true,
 
 			args: [
 				{
 					key: 'command',
-					prompt: 'Which command would you like to load?',
+					prompt: '어떤 명령어를 로드할까요?',
 					validate: val => new Promise(resolve => {
 						if(!val) return resolve(false);
 						const split = val.split(':');
 						if(split.length !== 2) return resolve(false);
 						if(this.client.registry.findCommands(val).length > 0) {
-							return resolve('That command is already registered.');
+							return resolve('이미 등록된 명령어입니다.');
 						}
 						const cmdPath = this.client.registry.resolveCommandPath(split[0], split[1]);
 						fs.access(cmdPath, fs.constants.R_OK, err => err ? resolve(false) : resolve(true));

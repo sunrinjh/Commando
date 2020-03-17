@@ -4,23 +4,23 @@ const Command = require('../base');
 module.exports = class DisableCommandCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'disable',
-			aliases: ['disable-command', 'cmd-off', 'command-off'],
+			name: '비활성화',
+			aliases: ['disable-command', 'cmd-off', 'command-off', 'disable'],
 			group: 'commands',
 			memberName: 'disable',
-			description: 'Disables a command or command group.',
+			description: '명령어, 혹은 명령어 그룹을 비활성화합니다.',
 			details: oneLine`
-				The argument must be the name/ID (partial or whole) of a command or command group.
-				Only administrators may use this command.
+				인자값은 명령어, 혹은 명령어 그룹의 이름/ID여야 합니다.
+				관리자만이 이 명령어를 사용할 수 있습니다.
 			`,
-			examples: ['disable util', 'disable Utility', 'disable prefix'],
+			examples: ['비활성화 util', '비활성화 Utility', '비활성화 prefix'],
 			guarded: true,
 
 			args: [
 				{
 					key: 'cmdOrGrp',
 					label: 'command/group',
-					prompt: 'Which command or group would you like to disable?',
+					prompt: '어떤 명령어, 혹은 명령어 그룹을 비활성화할까요?',
 					type: 'group|command'
 				}
 			]
@@ -35,15 +35,15 @@ module.exports = class DisableCommandCommand extends Command {
 	run(msg, args) {
 		if(!args.cmdOrGrp.isEnabledIn(msg.guild, true)) {
 			return msg.reply(
-				`The \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} is already disabled.`
+				` \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} 은/는 이미 비활성화 상태입니다. `
 			);
 		}
 		if(args.cmdOrGrp.guarded) {
 			return msg.reply(
-				`You cannot disable the \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'}.`
+				`\`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} 은/는 비활성화 할 수 없습니다.`
 			);
 		}
 		args.cmdOrGrp.setEnabledIn(msg.guild, false);
-		return msg.reply(`Disabled the \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'}.`);
+		return msg.reply(` \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} 을/를 비활성화 했습니다. `);
 	}
 };

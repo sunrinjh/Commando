@@ -304,27 +304,27 @@ class Command {
 	onBlock(message, reason, data) {
 		switch(reason) {
 			case 'guildOnly':
-				return message.reply(`The \`${this.name}\` command must be used in a server channel.`);
+				return message.reply(`\`${this.name}\` 명령어는 서버 채널에서만 사용 가능합니다.`);
 			case 'nsfw':
-				return message.reply(`The \`${this.name}\` command can only be used in NSFW channels.`);
+				return message.reply(`\`${this.name}\` 명령어는 NSFW 채널에서만 사용가능합니다.`);
 			case 'permission': {
 				if(data.response) return message.reply(data.response);
-				return message.reply(`You do not have permission to use the \`${this.name}\` command.`);
+				return message.reply(`\`${this.name}\` 명령어를 사용하실 권한이 없습니다.`);
 			}
 			case 'clientPermissions': {
 				if(data.missing.length === 1) {
 					return message.reply(
-						`I need the "${permissions[data.missing[0]]}" permission for the \`${this.name}\` command to work.`
+						`\`${this.name}\` 명령어를 사용하기 위해선 "${permissions[data.missing[0]]}" 권한이 필요합니다.`
 					);
 				}
 				return message.reply(oneLine`
-					I need the following permissions for the \`${this.name}\` command to work:
+					\`${this.name}\` 명령어를 사용하기 위해선 다음 권한이 필요합니다.:
 					${data.missing.map(perm => permissions[perm]).join(', ')}
 				`);
 			}
 			case 'throttling': {
 				return message.reply(
-					`You may not use the \`${this.name}\` command again for another ${data.remaining.toFixed(1)} seconds.`
+					`\`${this.name}\` 명령어를 사용하시려면 ${data.remaining.toFixed(1)} 초 동안 기다리셔야 합니다.`
 				);
 			}
 			default:
@@ -351,9 +351,8 @@ class Command {
 
 		const invite = this.client.options.invite;
 		return message.reply(stripIndents`
-			An error occurred while running the command: \`${err.name}: ${err.message}\`
-			You shouldn't ever receive an error like this.
-			Please contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
+			명령어를 실행하는 도중 오류가 발생했습니다: \`${err.name}: ${err.message}\`
+			${invite ? `${invite} 이 서버에서` : ''}${ownerList || '봇 관리자'} 에게 알려주세요.
 		`);
 	}
 

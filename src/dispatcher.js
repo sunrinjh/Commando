@@ -129,7 +129,7 @@ class CommandDispatcher {
 				if(cmdMsg.command) {
 					if(!cmdMsg.command.isEnabledIn(message.guild)) {
 						if(!cmdMsg.command.unknown) {
-							responses = await cmdMsg.reply(`The \`${cmdMsg.command.name}\` command is disabled.`);
+							responses = await cmdMsg.reply(`\`${cmdMsg.command.name}\` 명령어는 비활성화 상태입니다.`);
 						} else {
 							/**
 							 * Emitted when an unknown command is triggered

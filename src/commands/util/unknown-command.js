@@ -6,7 +6,7 @@ module.exports = class UnknownCommandCommand extends Command {
 			name: 'unknown-command',
 			group: 'util',
 			memberName: 'unknown-command',
-			description: 'Displays help information for when an unknown command is used.',
+			description: '알 수 없는 명령어가 사용됐을 때 help 명령을 통해 사용가능한 명령어를 확인하라고 합니다.',
 			examples: ['unknown-command kickeverybodyever'],
 			unknown: true,
 			hidden: true
@@ -15,11 +15,11 @@ module.exports = class UnknownCommandCommand extends Command {
 
 	run(msg) {
 		return msg.reply(
-			`Unknown command. Use ${msg.anyUsage(
-				'help',
+			`알 수 없는 명령어입니다. ${msg.anyUsage(
+				'도움',
 				msg.guild ? undefined : null,
 				msg.guild ? undefined : null
-			)} to view the command list.`
+			)} 를 통해 사용가능한 명령어를 확인해보세요.`
 		);
 	}
 };

@@ -207,7 +207,7 @@ module.exports = Structures.extend('Message', Message => {
 					 * (if applicable - see {@link Command#run})
 					 */
 					this.client.emit('commandCancel', this.command, collResult.cancelled, this, collResult);
-					return this.reply('Cancelled command.');
+					return this.reply('취소된 명령어');
 				}
 				args = collResult.values;
 			}

@@ -4,23 +4,23 @@ const Command = require('../base');
 module.exports = class EnableCommandCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'enable',
-			aliases: ['enable-command', 'cmd-on', 'command-on'],
+			name: '활성화',
+			aliases: ['enable-command', 'cmd-on', 'command-on', 'enable'],
 			group: 'commands',
 			memberName: 'enable',
-			description: 'Enables a command or command group.',
+			description: '명령어, 혹은 명령어 그룹을 활성화합니다.',
 			details: oneLine`
-				The argument must be the name/ID (partial or whole) of a command or command group.
-				Only administrators may use this command.
+				인자값은 명령어, 혹은 명령어 그룹의 이름/ID여야 합니다.
+				관리자만이 이 명령어를 사용할 수 있습니다.
 			`,
-			examples: ['enable util', 'enable Utility', 'enable prefix'],
+			examples: ['활성화 util', '활성화 Utility', '활성화 prefix'],
 			guarded: true,
 
 			args: [
 				{
 					key: 'cmdOrGrp',
 					label: 'command/group',
-					prompt: 'Which command or group would you like to enable?',
+					prompt: '어떤 명령어, 혹은 명령어 그룹을 비활성화할까요?',
 					type: 'group|command'
 				}
 			]
@@ -36,18 +36,18 @@ module.exports = class EnableCommandCommand extends Command {
 		const group = args.cmdOrGrp.group;
 		if(args.cmdOrGrp.isEnabledIn(msg.guild, true)) {
 			return msg.reply(
-				`The \`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} is already enabled${
+				`\`${args.cmdOrGrp.name}\` ${args.cmdOrGrp.group ? 'command' : 'group'} 은/는 이미 활성화 상태입니다${
 					group && !group.isEnabledIn(msg.guild) ?
-					`, but the \`${group.name}\` group is disabled, so it still can't be used` :
+					`, 하지만 \`${group.name}\` 그룹이 비활성화 상태입니다, 따라서 명령어를 사용할 수 없습니다` :
 					''
 				}.`
 			);
 		}
 		args.cmdOrGrp.setEnabledIn(msg.guild, true);
 		return msg.reply(
-			`Enabled the \`${args.cmdOrGrp.name}\` ${group ? 'command' : 'group'}${
+			`\`${args.cmdOrGrp.name}\` ${group ? 'command' : 'group'} 을/를 활성화 했습니다${
 				group && !group.isEnabledIn(msg.guild) ?
-				`, but the \`${group.name}\` group is disabled, so it still can't be used` :
+				`, 하지만 \`${group.name}\` 그룹이 비활성화 상태입니다, 따라서 명령어를 사용할 수 없습니다` :
 				''
 			}.`
 		);

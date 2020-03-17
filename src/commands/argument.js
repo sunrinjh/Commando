@@ -179,10 +179,10 @@ class Argument {
 
 			// Prompt the user for a new value
 			prompts.push(await msg.reply(stripIndents`
-				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
+				${empty ? this.prompt : valid ? valid : `잘못된 ${this.label} 값입니다. 다시 시도해보세요.`}
 				${oneLine`
-					Respond with \`cancel\` to cancel the command.
-					${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
+					\`취소\` 로 명령어를 취소할 수 있습니다..
+					${wait ? `명령어는 ${this.wait} 초 후 자동으로 취소됩니다.` : ''}
 				`}
 			`));
 
@@ -206,7 +206,7 @@ class Argument {
 			}
 
 			// See if they want to cancel
-			if(val.toLowerCase() === 'cancel') {
+			if(val.toLowerCase() === 'cancel' || val.toLowerCase() === '취소') {
 				return {
 					value: null,
 					cancelled: 'user',
@@ -265,21 +265,21 @@ class Argument {
 					const escaped = escapeMarkdown(val).replace(/@/g, '@\u200b');
 					prompts.push(await msg.reply(stripIndents`
 						${valid ? valid : oneLine`
-							You provided an invalid ${this.label},
-							"${escaped.length < 1850 ? escaped : '[too long to show]'}".
-							Please try again.
+							잘못된 ${this.label} 값입니다.
+							"${escaped.length < 1850 ? escaped : '[표시하기엔 너무 김]'}".
+							다시 시도해보세요.
 						`}
 						${oneLine`
-							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry up to this point.
-							${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
+							\`cancel\` 로 명령어를 취소하거나, \`finish\` 로 명령을 마무리합니다.
+							${wait ? `명령어는 ${this.wait} 초 후 자동으로 취소됩니다.` : ''}
 						`}
 					`));
 				} else if(results.length === 0) {
 					prompts.push(await msg.reply(stripIndents`
 						${this.prompt}
 						${oneLine`
-							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry.
-							${wait ? `The command will automatically be cancelled in ${this.wait} seconds, unless you respond.` : ''}
+							\`취소\` 로 명령어를 취소하거나, \`완료\` 로 명령을 마무리합니다.
+							${wait ? `명령어는 ${this.wait} 초 후 자동으로 취소됩니다.` : ''}
 						`}
 					`));
 				}
@@ -305,7 +305,7 @@ class Argument {
 
 				// See if they want to finish or cancel
 				const lc = val.toLowerCase();
-				if(lc === 'finish') {
+				if(lc === 'finish' || lc === '완료') {
 					return {
 						value: results.length > 0 ? results : null,
 						cancelled: this.default ? null : results.length > 0 ? null : 'user',
@@ -313,7 +313,7 @@ class Argument {
 						answers
 					};
 				}
-				if(lc === 'cancel') {
+				if(lc === 'cancel' || lc === '취소') {
 					return {
 						value: null,
 						cancelled: 'user',
