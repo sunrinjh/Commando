@@ -29,10 +29,10 @@ Additionally, it makes full use of ES2017's `async`/`await` functionality for cl
 - Command editing (user edits their message that triggered the command, and the bot's response updates with it)
 - Command reloading, as well as loading/unloading
 - Command throttling/cooldowns
-
+- Commando 한글화
 ## Installation
 **Node 8.6.0 or newer is required.**  
-`npm install discord.js-commando`
+`npm install discord.js-commando-kr`
 
 ## Documentation
 [View the docs here.](https://discord.js.org/#/docs/commando)  
